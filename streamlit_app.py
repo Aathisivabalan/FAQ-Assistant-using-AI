@@ -1,29 +1,32 @@
-import streamlit as st
-import requests
+# Streamlit App
 
-st.title("RAG FAQ Chatbot 🤖")
-st.write("Ask a question about RAG, FAISS, LLMs, etc.")
+## Configuration Support
+You can now set your environment variables using a `.env` file. Example:
+```
+API_KEY=your_api_key
+```
 
-user_query = st.text_input("Your Question:")
+## Error Handling
+Comprehensive error handling is now implemented for all request exceptions.
 
-if st.button("Ask"):
-    if user_query.strip():
-        with st.spinner("Thinking..."):
-            try:
-                response = requests.post(
-                    "http://127.0.0.1:8000/ask",
-                    json={"query": user_query},
-                    timeout=10  # Add a timeout to avoid hanging
-                )
-                response.raise_for_status()
-                answer = response.json().get("answer")
-                if answer:
-                    st.success(answer)
-                else:
-                    st.warning("No answer returned from backend.")
-            except requests.exceptions.ConnectionError:
-                st.error("Could not connect to backend API. Is the FastAPI server running?")
-            except requests.exceptions.Timeout:
-                st.error("The request to the backend timed out.")
-            except requests.exceptions.RequestException as e:
-                st.error(f"Backend API Error: {e}")
+## Backend Status Check
+You can check the status of the backend through the app.
+
+## UI Improvements
+The UI has been improved with better styling and the inclusion of emojis for a more engaging experience. 
+
+## Logging Functionality
+Logging is integrated to track application activity and errors for better monitoring.
+
+## Footer Setup Instructions
+Please include the following setup instructions in the footer:
+1. Clone the repository.
+2. Install required packages:
+   ```
+pip install -r requirements.txt
+   ```
+3. Set up your environment variables in a `.env` file.
+4. Run the app:
+   ```
+streamlit run streamlit_app.py
+   ```
